@@ -175,7 +175,77 @@ def __(mo):
 
     ### Descripción gráfica
 
-    La función trascendental **tiene simetría con respecto al eje vertical** (función par), y **es periódica**. El rango de interés es aquel en que contiene las raíces positivas, por lo que se ha graficado únicamente la función para valores de $\xi \ge 0$.
+    La función trascendental **tiene simetría con respecto al eje vertical** (función par), y **es periódica**.
+
+    """    
+    )
+    return
+
+
+@app.cell
+def __(mo):
+    mo.md(
+        r"""
+        Número de Biot $(\mathrm{Bi})$:
+        """
+    )
+    return
+
+
+@app.cell
+def __(mo, show_element):
+    Bi0_value = mo.ui.number(start=-25, stop=20, step=1, value=0)
+    show_element(Bi0_value)
+    return Bi0_value,
+
+
+@app.cell
+def __(Bi0_value, np, plt, xitanxi_Bi):
+    fig0 = plt.figure()
+    ax0 = fig0.add_subplot(111)
+
+    # Horizontal and vertical lines in the graph
+    ax0.axhline(0, ls='--', color='k')
+    ax0.axvline(0, ls='--', color='k')
+
+    # Equal convection and conduction: Bi = 1
+    _xi = np.linspace(-3*np.pi, 3*np.pi, 1000)
+    _tanxi_bi = xitanxi_Bi(_xi, Bi0_value.value)
+    _BiValue = Bi0_value.value
+    _label = "".join([r"$\mathrm{Bi} = $", str(_BiValue)])
+    ax0.plot(_xi, _tanxi_bi, 
+            ls='', marker='.', color='k', label=_label)
+    ax0.plot(_xi, _tanxi_bi, 
+            ls='-', color='k', alpha=0.5)
+
+    # Format graph
+    ax0.set_xlim(-3*np.pi, 3*np.pi)
+    ax0.set_ylim(-5, 5)
+
+    ax0.set_xlabel(r"$\xi$")
+    ax0.set_ylabel(r"$\xi \, \tan (\xi) - \mathrm{Bi}$")
+
+    ax0.set_xticks([-3*np.pi, -2.5*np.pi, -2*np.pi, -1.5*np.pi, -1*np.pi, -0.5*np.pi,
+                   0, 0.5*np.pi, np.pi, 1.5*np.pi, 2*np.pi, 2.5*np.pi, 3*np.pi])
+    ax0.set_xticklabels([r"${-3 \pi}$", r"$-\frac{5\pi}{2}$", 
+                         r"${-2 \pi}$", r"$-\frac{3\pi}{2}$",
+                         r"${-\pi}$", r"$-\frac{\pi}{2}$",
+                        r"$0$", r"$\frac{\pi}{2}$", r"${\pi}$", 
+                        r"$\frac{3\pi}{2}$", r"${2 \pi}$",
+                        r"$\frac{5\pi}{2}$", r"${3 \pi}$"])
+    ax0.legend(loc='upper right')
+
+    ax0.grid(ls='--', color='lightgray')
+
+    plt.gca()
+    return ax0, fig0
+
+
+@app.cell
+def __(mo):
+    mo.md(
+    r"""
+    El rango de interés es aquel en que contiene las raíces positivas, cuando el número de Biot es positivo; por lo que se ha graficado únicamente la función para valores de $\xi \ge 0$.
 
     Se considera el caso en que $\mathrm{Bi}=1$, y los casos límite en que $\mathrm{Bi} \rightarrow 0$, y $\mathrm{Bi} \rightarrow \infty$.
 
@@ -351,7 +421,7 @@ def __(Bi_value, Fo_value, Nroots_value, dimlessT, find_eigen, np, plt):
         plt.xlabel(r"Posicion adimensional, $x^*$")
         plt.ylabel(r"Temperatura adimensional, $\theta^*$")
         return plt.gca()
-        
+
 
     # Fourier number
     _Fo = Fo_value.value
